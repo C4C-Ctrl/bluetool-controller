@@ -16,6 +16,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # --- DEBUG STEP ADDED HERE ---
+      - name: Debug Workspace File Structure
+        run: find $GITHUB_WORKSPACE -maxdepth 5
+        # This command will print the file tree up to 5 levels deep
+      # -----------------------------
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -27,11 +33,11 @@ jobs:
 
       - name: Make Gradle Executable
         run: chmod +x gradlew
-        working-directory: android
+        working-directory: android # This is the line we suspect is incorrect
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
-        working-directory: android
+        working-directory: android # This is the line we suspect is incorrect
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
